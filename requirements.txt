@@ -1,8 +1,13 @@
 torch>=1.7
 torchvision
-tqdm
 numpy
 opencv-python
-matplotlib
+scipy
+tqdm
 pyyaml
+pandas
+matplotlib
 tensorboard
+scikit-image
+scikit-learn
+cython
