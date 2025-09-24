@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+env/
+.conda/
+
+# Training artifacts
+experiments/
+runs/
+logs/
+checkpoints/
+*.pth
+*.pt
+
+# Data
+data/

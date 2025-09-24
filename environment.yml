@@ -1,0 +1,17 @@
+name: centerfusion-vod
+channels:
+  - pytorch
+  - defaults
+dependencies:
+  - python=3.8
+  - pytorch
+  - torchvision
+  - cudatoolkit=11.1
+  - pip
+  - pip:
+      - tqdm
+      - numpy
+      - opencv-python
+      - matplotlib
+      - pyyaml
+      - tensorboard
