@@ -2,6 +2,9 @@ import os
 import numpy as np
 import cv2
 import json
+# from data.vod_repo.view_of_delft_dataset.vod.configuration import KittiLocations
+# from data.vod_repo.view_of_delft_dataset.vod.frame import FrameDataLoader
+# from data.vod_repo.view_of_delft_dataset.vod.visualization import Visualization2D
 
 # ==========================
 # CONFIGURE THESE PATHS
@@ -53,7 +56,8 @@ def lidar_to_camera(box, Tr_velo_to_cam):
     return [xyz_cam[0], xyz_cam[1], xyz_cam[2], *box[3:]]
 
 def project_to_2d(box_cam, P2):
-    return [0, 0, 50, 50]  # placeholder
+    # Placeholder: replace with proper 3D->2D projection if needed
+    return [0, 0, 50, 50]
 
 # ==========================
 # PROCESS DATA
@@ -86,8 +90,6 @@ for frame_id_str in frame_indices:
         radar_points = np.hstack([radar_points, np.zeros((radar_points.shape[0], 1), dtype=np.float32)])
         print(f"Warning: radar file {os.path.basename(radar_path)} had 3 values per point, padded with 0 velocity")
     else:
-        # If the number of floats is not divisible by 3 or 4, pad to nearest multiple of 4
-        n_points = radar_points.size // 4
         remainder = radar_points.size % 4
         if remainder != 0:
             radar_points = np.pad(radar_points, (0, 4 - remainder), 'constant', constant_values=0)
@@ -97,17 +99,19 @@ for frame_id_str in frame_indices:
     out_radar_path = os.path.join(radar_out_dir, f"{frame_id_str}.npy")
     np.save(out_radar_path, radar_points)
 
-    # Load labels/calib
+    # Load labels and calibration
     objects = load_kitti_label(label_path)
     calib = load_kitti_calib(calib_path)
     P2 = calib['P2']
     Tr_velo_to_cam = np.vstack([calib['Tr_velo_to_cam'], [0, 0, 0, 1]])
 
+    # Convert boxes
     for obj in objects:
         obj['bbox_3d'] = lidar_to_camera(obj['bbox_3d'], Tr_velo_to_cam)
         obj['bbox_2d'] = project_to_2d(obj['bbox_3d'], P2)
         obj['radar'] = []
 
+    # Add to annotations
     annotations.append({
         "frame_id": int(frame_id_str),
         "image_path": out_img_path,

@@ -11,3 +11,5 @@ tensorboard
 scikit-image
 scikit-learn
 cython
+k3d
+notebook
