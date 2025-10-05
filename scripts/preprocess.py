@@ -2,7 +2,11 @@ import os
 import sys
 import numpy as np
 import json
+
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+
 from tqdm import tqdm
 
 # ==========================
@@ -40,7 +44,7 @@ kitti_locations = KittiLocations(root_dir=raw_root, output_dir=output_root)
 # LOOP OVER FRAMES
 # ======================
 annotations = []
-frame_numbers = [f"{i:05d}" for i in range(0, 10)] # 9930 is the last frame in VoD dataset
+frame_numbers = [f"{i:05d}" for i in range(0, 9930)] # 9930 is the last frame in VoD dataset
 
 for frame_number in tqdm(frame_numbers):
     try:
