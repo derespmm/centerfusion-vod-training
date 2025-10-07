@@ -58,15 +58,17 @@ for frame_number in tqdm(frame_numbers):
         fig.savefig(fig_save_path, bbox_inches='tight', transparent=True)
         plt.close(fig)
 
-        # ========== Save radar raw data ==========
+        # ========== Save radar calibrated data ==========
         radar_data = frame_data.radar_data
-        radar_out_path = os.path.join(radar_out_dir, f"{frame_number}.npy")
-        np.save(radar_out_path, radar_data)
 
-        # ========== Project radar to 2D ==========
         T = FrameTransformMatrix(frame_data)
         radar_homo = homogeneous_coordinates(radar_data[:, :3])
         radar_cam = homogeneous_transformation(radar_homo, T.t_camera_radar)
+
+        radar_out_path = os.path.join(radar_out_dir, f"{frame_number}.npy")
+        np.save(radar_out_path, radar_cam[:, :3])
+
+        # ========== Project radar to 2D ==========
         radar_2d = project_3d_to_2d(radar_cam, T.camera_projection_matrix)
         valid_idx = canvas_crop(radar_2d, frame_data.image.shape, points_depth=radar_cam[:, 2])
         radar_2d = radar_2d[valid_idx]
