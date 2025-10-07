@@ -15,10 +15,10 @@ from tqdm import tqdm
 vod_repo_path = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\vod_repo\view_of_delft_dataset"
 sys.path.insert(0, vod_repo_path)
 
-from vod.configuration import KittiLocations
-from vod.frame import FrameDataLoader, FrameTransformMatrix, FrameLabels
-from vod.visualization import Visualization2D
-from vod.frame.transformations import (
+from vod.configuration import KittiLocations #type: ignore
+from vod.frame import FrameDataLoader, FrameTransformMatrix, FrameLabels # type: ignore
+from vod.visualization import Visualization2D # type: ignore
+from vod.frame.transformations import ( # type: ignore
     homogeneous_coordinates,
     homogeneous_transformation,
     project_3d_to_2d,
