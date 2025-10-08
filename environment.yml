@@ -1,17 +1,31 @@
-name: centerfusion-vod
+name: view-of-delft-env
 channels:
-  - pytorch
+  - conda-forge
   - defaults
+  - open3d-admin
 dependencies:
-  - python=3.8
-  - pytorch
-  - torchvision
-  - cudatoolkit=11.1
-  - pip
+  - python=3.7
+  - jupyter
+  - numpy=1.19
+  - matplotlib=3.3
+  - tqdm=4.62.2
+  - open3d=0.13.0
+  - ipympl=0.7.0
+  - k3d=2.10.0
+  - pyproj
+  - transforms3d=0.3.1
+  - funcy=1.16
+
+  # Development tools (uncomment to install)
+
+  - nbqa=1.1.1
+  - pylint=2.10.2
+  - mypy=0.910
+  - pyupgrade=2.29.0
+  - flake8=3.9.2
+  - isort=5.9.3
+  - pip=21.2.4
   - pip:
-      - tqdm
-      - numpy
-      - opencv-python
-      - matplotlib
-      - pyyaml
-      - tensorboard
+      - ipynb==0.5.1
+      - black[jupyter]==21.7b0
+      - vulture==2.3
