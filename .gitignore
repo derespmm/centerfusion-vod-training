@@ -19,6 +19,7 @@ checkpoints/
 
 # Data
 data/
+models/
 .ipynb_checkpoints/
 anaconda_projects/
 
