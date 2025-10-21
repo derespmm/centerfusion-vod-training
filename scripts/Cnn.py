@@ -1,12 +1,9 @@
-import os 
-import json
 import torch
 import torch.nn as nn
-import torch.optim as optim
+from PIL import Image
 from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, models
-from PIL import Image
-import numpy as np
+
 
 class SimpleModel(nn.Module):
     def __init__(self):
