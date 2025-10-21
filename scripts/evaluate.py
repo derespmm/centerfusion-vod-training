@@ -1,13 +1,18 @@
+from dotenv import load_dotenv
+load_dotenv()
 import os
 import torch
 import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 from torchvision import transforms, models
+# from Cnn import SimpleModel
 
 # Import VoD classes (adjust your vod_repo path)
 import sys
-vod_repo_path = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\vod_repo\view_of_delft_dataset"
+
+cwd = os.getcwd()
+vod_repo_path = os.path.join(cwd, os.environ["VOD_REPO_PATH"])
 sys.path.insert(0, vod_repo_path)
 
 from vod.configuration import KittiLocations # type: ignore
@@ -18,13 +23,12 @@ from vod.frame.transformations import homogeneous_coordinates, project_3d_to_2d,
 # =========================
 # Configuration
 # =========================
-images_root = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\vod_processed\images"
-annotations_path = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\vod_processed\annotations.json"
-frame_number = "00051"  # frame to visualize
-model_path = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\models\simple_model.pth"  # change to your saved model
+images_root = os.path.join(cwd, os.environ["IMAGES_ROOT"])
+annotations_path = os.path.join(cwd, os.environ["ANNOTATIONS_PATH"])
+model_path = os.path.join(cwd, os.environ["MODELS_PATH"])
 
-raw_root = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\View_of_Delft_dataset_PUBLIC\view_of_delft_PUBLIC\view_of_delft_PUBLIC"
-output_root = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\vod_processed"
+raw_root = os.path.join(cwd, os.environ["RAW_ROOT"])
+output_root = os.path.join(cwd, os.environ["OUTPUT_ROOT"], "eval")
 
 # Image normalization parameters
 original_img_size = (1920, 1080)
@@ -63,6 +67,8 @@ model.eval()
 # =========================
 # Load frame data
 # =========================
+
+frame_number = "00051"  # frame to visualize
 kitti_locations = KittiLocations(root_dir=raw_root, output_dir=output_root)
 frame_data = FrameDataLoader(kitti_locations=kitti_locations, frame_number=frame_number)
 T = FrameTransformMatrix(frame_data)
@@ -89,7 +95,7 @@ pred_3d[:6] *= max_3d_coord  # x, y, z, h, w, l
 # Convert 3D bbox to corners
 # =========================
 def get_3d_corners(bbox3d):
-    x, y, z, h, w, l, rot = bbox3d
+    x, y, z, h, w, l, _ = bbox3d
     corners = np.array([
         [x - l/2, y - w/2, z - h/2],
         [x - l/2, y + w/2, z - h/2],
