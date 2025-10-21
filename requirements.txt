@@ -13,3 +13,4 @@ scikit-learn
 cython
 k3d
 notebook
+python-dotenv

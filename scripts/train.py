@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 import os
 import json
 import torch
@@ -80,8 +82,8 @@ transform = transforms.Compose([
 ])
 
 cwd = os.getcwd()
-annotations_path = os.path.join(cwd, r"data\vod_processed\annotations.json")
-images_root = os.path.join(cwd, r"data\vod_processed\images")
+annotations_path = os.path.join(cwd, os.environ["ANNOTATIONS_PATH"])
+images_root = os.path.join(cwd, os.environ["IMAGES_ROOT"])
 dataset = BoundingBoxDataset(
     annotations_path=annotations_path,
     images_root=images_root,
