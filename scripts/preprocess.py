@@ -1,3 +1,5 @@
+from dotenv import load_dotenv
+load_dotenv()
 import os
 import sys
 import numpy as np
@@ -12,7 +14,7 @@ from tqdm import tqdm
 # ==========================
 # ADD VOD REPO TO PYTHON PATH
 # ==========================
-vod_repo_path = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\vod_repo\view_of_delft_dataset"
+vod_repo_path = os.path.join(os.getcwd(), os.environ["VOD_REPO_PATH"])
 sys.path.insert(0, vod_repo_path)
 
 from vod.configuration import KittiLocations #type: ignore
@@ -28,8 +30,8 @@ from vod.frame.transformations import ( # type: ignore
 # ==========================
 # CONFIG
 # ==========================
-raw_root = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\View_of_Delft_dataset_PUBLIC\view_of_delft_PUBLIC\view_of_delft_PUBLIC"
-output_root = r"C:\Users\Budge\OneDrive\Desktop\Schoolwork\Semester7\CSE486\CenterfusionVodTraining\centerfusion-vod-training\data\vod_processed"
+raw_root = os.path.join(os.getcwd(), os.environ["RAW_ROOT"])
+output_root = os.path.join(os.getcwd(), os.environ["OUTPUT_ROOT"])
 
 image_out_dir = os.path.join(output_root, "images")
 radar_out_dir = os.path.join(output_root, "radar")
