@@ -9,6 +9,7 @@ from torch.utils.data import Dataset, DataLoader
 from torchvision import transforms, models
 from PIL import Image
 import numpy as np
+from Cnn import SimpleModel
 
 # ======================
 # Dataset
@@ -90,24 +91,6 @@ dataset = BoundingBoxDataset(
     transform=transform
 )
 dataloader = DataLoader(dataset, batch_size=8, shuffle=True)
-
-# ======================
-# Simple CNN model
-# ======================
-class SimpleModel(nn.Module):
-    def __init__(self):
-        super().__init__()
-        # Use a pretrained backbone
-        self.backbone = models.resnet18(weights=None)
-        self.backbone.fc = nn.Identity()  # Remove final classification
-        self.fc_2d = nn.Linear(512, 4)
-        self.fc_3d = nn.Linear(512, 7)
-
-    def forward(self, x):
-        features = self.backbone(x)
-        bbox_2d = self.fc_2d(features)
-        bbox_3d = self.fc_3d(features)
-        return bbox_2d, bbox_3d
 
 model = SimpleModel()
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")

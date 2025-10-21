@@ -6,7 +6,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 from torchvision import transforms, models
-# from Cnn import SimpleModel
+from Cnn import SimpleModel
 
 # Import VoD classes (adjust your vod_repo path)
 import sys
@@ -41,21 +41,6 @@ transform = transforms.Compose([
     transforms.Resize((224, 224)),
     transforms.ToTensor()
 ])
-
-# Simple model definition (must match your trained model)
-class SimpleModel(torch.nn.Module):
-    def __init__(self):
-        super().__init__()
-        self.backbone = models.resnet18(weights=None)
-        self.backbone.fc = torch.nn.Identity()
-        self.fc_2d = torch.nn.Linear(512, 4)
-        self.fc_3d = torch.nn.Linear(512, 7)
-
-    def forward(self, x):
-        features = self.backbone(x)
-        bbox_2d = self.fc_2d(features)
-        bbox_3d = self.fc_3d(features)
-        return bbox_2d, bbox_3d
 
 # Load trained model
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
