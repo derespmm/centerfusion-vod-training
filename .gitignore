@@ -20,6 +20,7 @@ checkpoints/
 # Data
 data/
 models/
+temp_scripts/
 outputs_fullres/
 .ipynb_checkpoints/
 anaconda_projects/

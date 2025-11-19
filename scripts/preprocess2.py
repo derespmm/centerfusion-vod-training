@@ -78,7 +78,7 @@ for frame_number in tqdm(frame_numbers):
         # ========== Build annotations entry ==========
         frame_ann = {
             "frame_id": frame_number,
-            "image_path": f"images/{frame_number}.png",
+            "image_path": f"images/{frame_number}.jpg",
             "radar_path": f"radar/{frame_number}.npy",
             "radar_2d_path": f"radar_2d/{frame_number}.npy",
             "objects": []
