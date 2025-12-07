@@ -13,3 +13,5 @@ scikit-learn
 cython
 k3d
 notebook
+seaborn
+Pillow

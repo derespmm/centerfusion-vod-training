@@ -1,0 +1,18 @@
+{
+  "classes": [
+    "Pedestrian",
+    "Cyclist",
+    "Car"
+  ],
+  "class_to_idx": {
+    "Pedestrian": 0,
+    "Cyclist": 1,
+    "Car": 2
+  },
+  "idx_to_class": {
+    "0": "Pedestrian",
+    "1": "Cyclist",
+    "2": "Car"
+  },
+  "num_classes": 3
+}
